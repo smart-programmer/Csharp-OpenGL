@@ -82,7 +82,7 @@ namespace MainProject
 
             // create model
             RawModel model = loader.LoadToVao(vertices, t, indices);
-            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/c.jpeg"));
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/wall1.png"));
             TexturedModel texturedModel = new TexturedModel(model, texture);
 
 
