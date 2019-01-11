@@ -3,7 +3,7 @@ using OpenGL;
 using System.Text;
 using System.IO;
 
-namespace FirstOpenGLProject
+namespace MainProject
 {
     class Shaders
     {
@@ -25,17 +25,6 @@ namespace FirstOpenGLProject
         {
             vertexShaderID = loadShader(vertexShader, ShaderType.VertexShader);
             fragmentShaderID = loadShader(fragmentShader, ShaderType.FragmentShader);
-            foreach (string text in vertexShader)
-            {
-                Console.WriteLine(text);
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            foreach (string text in fragmentShader)
-            {
-                Console.WriteLine(text);
-            }
             programID = Gl.CreateProgram();
             Gl.AttachShader(programID, vertexShaderID);
             Gl.AttachShader(programID, fragmentShaderID);
@@ -122,6 +111,7 @@ namespace FirstOpenGLProject
         protected override void bindAttributes()
         {
             base.bindAttribute(0, "position");
+            base.bindAttribute(1, "textureCoords");
         }
     }
 }

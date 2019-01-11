@@ -1,12 +1,13 @@
 ﻿using System;
 using OpenGL;
 using Glfw3;
+using MainProject.Models;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
 
-namespace FirstOpenGLProject
+namespace MainProject
 {
 
     class MainClass
@@ -60,9 +61,29 @@ namespace FirstOpenGLProject
     		3,1,2//bottom right triangle (v3, v1, v2)
     };
 
+            float[] textureCoords = {
+                0,0,//v0
+                0,1,//v1
+                1,1,//v2
+                1,0//v3
+    };
+
+            float[] t = {
+                0,0,
+                1,0,
+                1,1,
+                0,1,
+
+        };
+            //0,1,
+            //    1,1,
+            //    1,0,
+            //    0,0,
 
             // create model
-            RawModel model = loader.LoadToVao(vertices, indices);
+            RawModel model = loader.LoadToVao(vertices, t, indices);
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/c.jpeg"));
+            TexturedModel texturedModel = new TexturedModel(model, texture);
 
 
             // Loop until the user closes the window
@@ -71,7 +92,7 @@ namespace FirstOpenGLProject
                 // Render here
                 renderer.prepare();
                 shader.start();
-                renderer.render(model);
+                renderer.render(texturedModel);
                 shader.stop();
 
                 //Swap front and back buffers

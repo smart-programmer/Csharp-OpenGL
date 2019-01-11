@@ -1,8 +1,9 @@
 ﻿using System;
 using OpenGL;
+using MainProject.Models;
 
 
-namespace FirstOpenGLProject
+namespace MainProject
 {
     class Renderer
     {
@@ -13,12 +14,17 @@ namespace FirstOpenGLProject
         }
 
 
-        public void render(RawModel model)
+        public void render(TexturedModel texturedModel)
         {
+            RawModel model = texturedModel.rawModel;
             Gl.BindVertexArray(model.vaoID);
             Gl.EnableVertexAttribArray(0);
+            Gl.EnableVertexAttribArray(1);
+            Gl.ActiveTexture(TextureUnit.Texture0);
+            Gl.BindTexture(TextureTarget.Texture2d, texturedModel.modelTexture.textureId);
             Gl.DrawElements(PrimitiveType.Triangles, model.vertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
             Gl.DisableVertexAttribArray(0);
+            Gl.DisableVertexAttribArray(1);
             Gl.BindVertexArray(0);
         }
 

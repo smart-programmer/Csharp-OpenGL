@@ -1,0 +1,76 @@
+﻿using System;
+using OpenGL;
+using Glfw3;
+using System.Collections.Generic;
+
+
+
+namespace Episode2
+{
+    public class MainClass
+    {
+
+        public static int width = 1200, height = 700;
+
+        static void Main(string[] args)
+        {
+            // Initialize OpenGL
+            Gl.Initialize();
+
+
+            // If the library isn't in the environment path we need to set it
+            Glfw.ConfigureNativesDirectory("..\\..\\libs");
+
+            // Initialize the GLFW
+            if (!Glfw.Init())
+                Environment.Exit(-1);
+
+            // Create a windowed mode window and its OpenGL context
+            var window = Glfw.CreateWindow(width, height, "OpenGL/Glfw");
+            if (!window)
+            {
+                Glfw.Terminate();
+                Environment.Exit(-1);
+            }
+
+            // Make the window's context current
+            Glfw.MakeContextCurrent(window);
+
+
+            Renderer renderer = new Renderer();
+            Loader loader = new Loader();
+
+            float[] vertices = {
+    -0.5f, 0.5f, 0f,
+    -0.5f, -0.5f, 0f,
+    0.5f, -0.5f, 0f,
+    0.5f, -0.5f, 0f,
+    0.5f, 0.5f, 0f,
+    -0.5f, 0.5f, 0f
+  };
+
+
+            RawModel model = loader.LoadToVao(vertices);
+
+            // Loop until the user closes the window
+            while (!Glfw.WindowShouldClose(window))
+            {
+                // Render here
+                renderer.prepare();
+                renderer.render(model);
+
+                //Swap front and back buffers
+                Glfw.SwapBuffers(window);
+
+                // Poll for and process events
+                Glfw.PollEvents();
+            }
+
+            // clean memory
+            loader.CleanUp();
+
+            // terminate program
+            Glfw.Terminate();
+        }
+    }
+}

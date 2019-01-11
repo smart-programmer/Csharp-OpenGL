@@ -1,19 +1,22 @@
 ﻿using System;
 using OpenGL;
+using MainProject.Models;
 using System.Collections.Generic;
 
-namespace FirstOpenGLProject
+namespace MainProject
 {
     class Loader
     {
         private List<uint> VAOS = new List<uint>();
         private List<uint> VBOS = new List<uint>();
+        private List<uint> TEXTURES = new List<uint>();
 
-        public RawModel LoadToVao(float[] positions, uint[] indices)
+        public RawModel LoadToVao(float[] positions, float[] textureCoords, uint[] indices)
         {
             uint vaoID = this.CreateVao();
             bindindicesBuffer(indices);
-            this.StoreDataInAttributeList(0, positions);
+            this.StoreDataInAttributeList(0, 3, positions);
+            this.StoreDataInAttributeList(1, 2, textureCoords);
             this.unbindVao();
             return new RawModel(vaoID, indices.Length);
         }
@@ -24,17 +27,18 @@ namespace FirstOpenGLProject
             uint vaoID = Gl.GenVertexArray();
             VAOS.Add(vaoID);
             Gl.BindVertexArray(vaoID);
+            
             return vaoID;
         }
+        
 
-
-        private void StoreDataInAttributeList(uint attribute_number, float[] data)
+        private void StoreDataInAttributeList(uint attribute_number, int coordinateSize, float[] data)
         {
             uint vboID = Gl.GenBuffer();
             VBOS.Add(vboID);
             Gl.BindBuffer(BufferTarget.ArrayBuffer, vboID);
             Gl.BufferData(BufferTarget.ArrayBuffer, (uint)(data.Length * sizeof(float)), data, BufferUsage.StaticDraw); 
-            Gl.VertexAttribPointer(attribute_number, 3, VertexAttribType.Float, false, 0, IntPtr.Zero); 
+            Gl.VertexAttribPointer(attribute_number, coordinateSize, VertexAttribType.Float, false, 0, IntPtr.Zero); 
             Gl.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
@@ -51,6 +55,22 @@ namespace FirstOpenGLProject
             Gl.BufferData(BufferTarget.ElementArrayBuffer, (uint)(indices.Length * sizeof(uint)), indices, BufferUsage.StaticDraw);
         }
 
+        public uint loadTexture(string path)
+        {
+            Texture texture = null;
+            try
+            {
+                texture = TextureLoader.getTexture(path);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            uint textureID = texture.textureID;
+            TEXTURES.Add(textureID);
+            return textureID;
+        }
+
 
         public void CleanUp()
         {
@@ -61,6 +81,11 @@ namespace FirstOpenGLProject
             uint[] vbosArray = VBOS.ToArray();
 
             Gl.DeleteBuffers(vbosArray);
+
+            uint[] texturesArray = TEXTURES.ToArray();
+
+            Gl.DeleteTextures(texturesArray);
+            
         }
     }
 }
