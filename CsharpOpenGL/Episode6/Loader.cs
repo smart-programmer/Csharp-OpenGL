@@ -57,6 +57,8 @@ namespace MainProject
 
         public uint loadTexture(string path)
         {
+            // i highly recommend that you do your own TextureLoader, take a look at Utils.cs
+
             Texture texture = null;
             try
             {

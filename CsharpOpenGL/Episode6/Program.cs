@@ -62,27 +62,25 @@ namespace MainProject
     };
 
             float[] textureCoords = {
-                0,0,//v0
-                0,1,//v1
-                1,1,//v2
-                1,0//v3
-    };
-
-            float[] t = {
                 0,0,
                 1,0,
                 1,1,
                 0,1,
 
         };
-            //0,1,
-            //    1,1,
-            //    1,0,
-            //    0,0,
+
+        // texture coords for fliped buffer
+        //    float[] b =
+        //    {
+        //        1,1,
+        //        0,1,
+        //        0,0,
+        //        1,0,
+        //};
 
             // create model
-            RawModel model = loader.LoadToVao(vertices, t, indices);
-            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/wall1.png"));
+            RawModel model = loader.LoadToVao(vertices, textureCoords, indices);
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/c.jpeg"));
             TexturedModel texturedModel = new TexturedModel(model, texture);
 
 
