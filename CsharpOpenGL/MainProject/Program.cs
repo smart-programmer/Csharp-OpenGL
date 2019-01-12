@@ -61,27 +61,26 @@ namespace MainProject
     		3,1,2//bottom right triangle (v3, v1, v2)
     };
 
-            float[] textureCoords = {
-                0,0,//v0
-                0,1,//v1
-                1,1,//v2
-                1,0//v3
-    };
 
-            float[] t = {
+        float[] textureCoords = {
                 0,0,
                 1,0,
                 1,1,
                 0,1,
 
         };
-            //0,1,
-            //    1,1,
-            //    1,0,
-            //    0,0,
 
-            // create model
-            RawModel model = loader.LoadToVao(vertices, t, indices);
+        // texture coords for fliped buffer
+        //    float[] textureCoords_fliped_buffer =
+        //    {
+        //        1,1,
+        //        0,1,
+        //        0,0,
+        //        1,0,
+        //};
+
+        // create model
+        RawModel model = loader.LoadToVao(vertices, textureCoords, indices);
             ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/wall1.png"));
             TexturedModel texturedModel = new TexturedModel(model, texture);
 

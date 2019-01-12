@@ -69,14 +69,14 @@ namespace MainProject
 
         };
 
-        // texture coords for fliped buffer
-        //    float[] b =
-        //    {
-        //        1,1,
-        //        0,1,
-        //        0,0,
-        //        1,0,
-        //};
+            // texture coords for fliped buffer
+            //    float[] textureCoords_fliped_buffer =
+            //    {
+            //        1,1,
+            //        0,1,
+            //        0,0,
+            //        1,0,
+            //};
 
             // create model
             RawModel model = loader.LoadToVao(vertices, textureCoords, indices);

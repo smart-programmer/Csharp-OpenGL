@@ -68,7 +68,7 @@ namespace MainProject
         {
             uint shaderID = Gl.CreateShader(type);
             Console.WriteLine(shaderID);
-            Gl.ShaderSource(shaderID, shaderString); //
+            Gl.ShaderSource(shaderID, shaderString);
             Gl.CompileShader(shaderID);
             int status;
             Gl.GetShader(shaderID, ShaderParameterName.CompileStatus, out status);
