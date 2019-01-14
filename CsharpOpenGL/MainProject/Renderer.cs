@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenGL;
+using MainProject.toolbox;
 using MainProject.Models;
 
 
@@ -14,14 +15,14 @@ namespace MainProject
         }
 
 
-        public void render(TexturedModel texturedModel)
+        public void render(TexturedModel texturedModel, StaticShader shader)
         {
             RawModel model = texturedModel.rawModel;
             Gl.BindVertexArray(model.vaoID);
             Gl.EnableVertexAttribArray(0);
             Gl.EnableVertexAttribArray(1);
-            Gl.ActiveTexture(TextureUnit.Texture0);
-            Gl.BindTexture(TextureTarget.Texture2d, texturedModel.modelTexture.textureId);
+            Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
+            Gl.BindTexture(TextureTarget.Texture2d, texturedModel.modelTexture.textureId); // pass coords
             Gl.DrawElements(PrimitiveType.Triangles, model.vertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
             Gl.DisableVertexAttribArray(0);
             Gl.DisableVertexAttribArray(1);

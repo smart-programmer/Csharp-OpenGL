@@ -7,8 +7,6 @@ namespace MainProject
 {
     class Shaders
     {
-        //H:\CsharpOpenGL\OpenGLDotNet\FirstOpenGLProject\shaders
-        // ..\\..\\shaders/
         public static string[] vertexShader = Utils.GetValidShaderStringArray("..\\..\\shaders/vertexShader.txt");
         public static string[] fragmentShader = Utils.GetValidShaderStringArray("..\\..\\shaders/fragmentShader.txt");
     }
@@ -31,7 +29,14 @@ namespace MainProject
             bindAttributes();
             Gl.LinkProgram(programID);
             Gl.ValidateProgram(programID);
-   
+            getAllUniformLocations();
+        }
+
+        protected abstract void getAllUniformLocations();
+
+        protected int getUinformLocation(string uniformName)
+        {
+            return Gl.GetUniformLocation(programID, uniformName);
         }
 
         public void start()
@@ -64,11 +69,33 @@ namespace MainProject
             Gl.BindAttribLocation(programID, attribute, variableName);
         }
 
+        protected void loadFloat(int location, float value)
+        {
+            Gl.Uniform1f(location, 1, ref value);// count
+        }
+
+        protected void loadVector(int location, Vertex3f vector)
+        {
+            Gl.Uniform3(location, vector.x, vector.y, vector.z);
+        }
+
+        protected void loadBool(int location, bool value)
+        {
+            float toLoad = (value) ? 1 : 0;
+
+            Gl.Uniform1f(location, 1, ref toLoad); // count
+        }
+
+        protected void loadMatrix(int location, Matrix4f matrix)
+        {
+            Gl.UniformMatrix4(location, false, matrix.Buffer);
+        }
+
         private static uint loadShader(string[] shaderString, ShaderType type)
         {
             uint shaderID = Gl.CreateShader(type);
             Console.WriteLine(shaderID);
-            Gl.ShaderSource(shaderID, shaderString); //
+            Gl.ShaderSource(shaderID, shaderString);
             Gl.CompileShader(shaderID);
             int status;
             Gl.GetShader(shaderID, ShaderParameterName.CompileStatus, out status);
@@ -101,6 +128,7 @@ namespace MainProject
     {
         public static string[] vertexString = Shaders.vertexShader;
         public static string[] fragmentString = Shaders.fragmentShader;
+        public int location_transformationMatrix;
 
         public StaticShader() : base(vertexString, fragmentString)
         {
@@ -112,6 +140,16 @@ namespace MainProject
         {
             base.bindAttribute(0, "position");
             base.bindAttribute(1, "textureCoords");
+        }
+
+        protected override void getAllUniformLocations()
+        {
+            location_transformationMatrix = base.getUinformLocation("transformationMatrix");
+        }
+
+        public void loadTransformationMatrix(Matrix4f matrix)
+        {
+            base.loadMatrix(location_transformationMatrix, matrix);
         }
     }
 }

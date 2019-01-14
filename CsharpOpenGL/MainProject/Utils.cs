@@ -3,6 +3,13 @@ using System.IO;
 using System.Drawing;
 using OpenGL;
 
+
+/// <summary>
+///  this is a utility file where i implement the functions/classes that are used in the ThinMatrix series and are lwjgl specific.
+///  this file may also contain some additional helper functions that are project specific  
+/// </summary>
+
+
 namespace MainProject
 {
     class Utils
@@ -87,6 +94,85 @@ namespace MainProject
             }
 
             return data;
+        }
+    }
+
+
+    public class Matrix4f : Matrix4x4
+    {
+        public Matrix4f(float[] values) : base(values)
+        {
+
+        }
+        public Matrix4f() : base()
+        {
+
+        }
+        public static void translate(Vertex3f translation, Matrix4f src, out Matrix4f des)
+        {
+            Matrix4f translationMatrix = new Matrix4f();
+            translationMatrix.SetIdentity();
+            float[] matbuffer = translationMatrix.Buffer;
+            matbuffer[12] = translation.x;
+            matbuffer[13] = translation.y;
+            matbuffer[14] = translation.z;
+            Matrix tempmat = (Matrix)new Matrix(matbuffer, 4, 4).Multiply(src);
+            des = new Matrix4f(tempmat.Buffer);
+        }
+
+        public static void rotate(float angle, Vertex3f axis, Matrix4f src, ref Matrix4f dest)
+        {
+            Matrix4f rotationMatrix = new Matrix4f();
+            rotationMatrix.SetIdentity();
+            float[] matbuffer = rotationMatrix.Buffer;
+            if (axis.x != 0)
+            {
+                matbuffer[5] = (float)Math.Cos(angle);
+                matbuffer[6] = (float)-Math.Sin(angle);
+                matbuffer[9] = (float)Math.Sin(angle);
+                matbuffer[10] = (float)Math.Cos(angle);
+            }
+            else if (axis.y != 0)
+            {
+                matbuffer[0] = (float)Math.Cos(angle);
+                matbuffer[2] = (float)Math.Sin(angle);
+                matbuffer[8] = (float)-Math.Sin(angle);
+                matbuffer[10] = (float)Math.Cos(angle);
+            }
+            else if (axis.z != 0)
+            {
+                matbuffer[0] = (float)Math.Cos(angle);
+                matbuffer[1] = (float)-Math.Sin(angle);
+                matbuffer[4] = (float)Math.Sin(angle);
+                matbuffer[5] = (float)Math.Cos(angle);
+            }
+
+            // apply rotation to src matrix
+            Matrix tempmat = (Matrix)new Matrix(matbuffer, 4, 4).Multiply(src);
+
+            // set dest matrix to the rotated matrix
+            dest = new Matrix4f(tempmat.Buffer);
+        }
+
+        public static void scale(Vertex3f vector, Matrix4f src, ref Matrix4f dest)
+        {
+            Matrix4f scalerMatrix = new Matrix4f();
+            scalerMatrix.SetIdentity();
+            float[] matbuffer = scalerMatrix.Buffer;
+            matbuffer[0] = vector.x;
+            matbuffer[5] = vector.y;
+            matbuffer[10] = vector.z;
+            Matrix tempmat = (Matrix)new Matrix(matbuffer, 4, 4).Multiply(src);
+            dest = new Matrix4f(tempmat.Buffer);
+        }
+    }
+
+
+    class math
+    {
+        public static float toRadians(float angle)
+        {
+            return (angle) * ((float)Math.PI / 180);
         }
     }
 }

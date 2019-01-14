@@ -2,6 +2,7 @@
 using OpenGL;
 using Glfw3;
 using MainProject.Models;
+using MainProject.toolbox;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
@@ -45,8 +46,7 @@ namespace MainProject
             // create loder and renderer
             Renderer renderer = new Renderer();
             Loader loader = new Loader();
-
-
+            
             // set data
 
             float[] vertices = {
@@ -62,13 +62,13 @@ namespace MainProject
     };
 
 
-        float[] textureCoords = {
+            float[] textureCoords = {
                 0,0,
                 1,0,
                 1,1,
                 0,1,
 
-        };
+    };
 
         // texture coords for fliped buffer
         //    float[] textureCoords_fliped_buffer =
@@ -79,9 +79,9 @@ namespace MainProject
         //        1,0,
         //};
 
-        // create model
-        RawModel model = loader.LoadToVao(vertices, textureCoords, indices);
-            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/wall1.png"));
+            // create model
+            RawModel model = loader.LoadToVao(vertices, textureCoords, indices);
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/me.jpg"));
             TexturedModel texturedModel = new TexturedModel(model, texture);
 
 
@@ -91,7 +91,7 @@ namespace MainProject
                 // Render here
                 renderer.prepare();
                 shader.start();
-                renderer.render(texturedModel);
+                renderer.render(texturedModel, shader);
                 shader.stop();
 
                 //Swap front and back buffers
