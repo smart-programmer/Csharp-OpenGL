@@ -1,5 +1,7 @@
 ﻿using System;
 using OpenGL;
+using MainProject.entities;
+using MainProject.toolbox;
 using System.Text;
 using System.IO;
 
@@ -129,6 +131,8 @@ namespace MainProject
         public static string[] vertexString = Shaders.vertexShader;
         public static string[] fragmentString = Shaders.fragmentShader;
         public int location_transformationMatrix;
+        public int location_projectionMatrix;
+        public int location_viewMatrix;
 
         public StaticShader() : base(vertexString, fragmentString)
         {
@@ -145,11 +149,24 @@ namespace MainProject
         protected override void getAllUniformLocations()
         {
             location_transformationMatrix = base.getUinformLocation("transformationMatrix");
+            location_projectionMatrix = base.getUinformLocation("projectionMatrix");
+            location_viewMatrix = base.getUinformLocation("viewMatrix");
         }
 
         public void loadTransformationMatrix(Matrix4f matrix)
         {
             base.loadMatrix(location_transformationMatrix, matrix);
+        }
+
+        public void loadProjectionMatrix(Matrix4f projection)
+        {
+            base.loadMatrix(location_projectionMatrix, projection);
+        }
+
+        public void loadViewMatrix(Camera camera)
+        {
+            Matrix4f viewMatrix = Maths.createViewMatrix(camera);
+            base.loadMatrix(location_viewMatrix, viewMatrix);
         }
     }
 }

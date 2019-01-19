@@ -175,4 +175,17 @@ namespace MainProject
             return (angle) * ((float)Math.PI / 180);
         }
     }
+
+
+    public class WinowInfo
+    {
+        public float windowWidth { set; get; }
+        public float windowHeight { set; get; }
+
+        public WinowInfo(float width, float height)
+        {
+            windowWidth = width;
+            windowHeight = height;
+        }
+    }
 }

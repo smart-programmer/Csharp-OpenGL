@@ -73,7 +73,7 @@ namespace Episode7
             // create model
             RawModel model = loader.LoadToVao(vertices, textureCoords, indices);
             ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/c.jpeg"));
-            TexturedModel texturedModel = new TexturedModel(model, texture);
+            TexturedModel staticModel = new TexturedModel(model, texture);
 
 
             // Loop until the user closes the window
@@ -82,7 +82,7 @@ namespace Episode7
                 // Render here
                 renderer.prepare();
                 shader.start();
-                renderer.render(texturedModel, shader);
+                renderer.render(staticModel, shader);
                 shader.stop();
 
                 //Swap front and back buffers

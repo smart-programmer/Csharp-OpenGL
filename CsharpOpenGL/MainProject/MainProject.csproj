@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="entities\Camera.cs" />
+    <Compile Include="entities\Entity.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Models\TexturedModel.cs" />
     <Compile Include="Program.cs" />

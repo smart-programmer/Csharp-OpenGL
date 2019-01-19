@@ -81,7 +81,7 @@ namespace MainProject
             // create model
             RawModel model = loader.LoadToVao(vertices, textureCoords, indices);
             ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/c.jpeg"));
-            TexturedModel texturedModel = new TexturedModel(model, texture);
+            TexturedModel staticModel = new TexturedModel(model, texture);
 
 
             // Loop until the user closes the window
@@ -90,7 +90,7 @@ namespace MainProject
                 // Render here
                 renderer.prepare();
                 shader.start();
-                renderer.render(texturedModel);
+                renderer.render(staticModel);
                 shader.stop();
 
                 //Swap front and back buffers
