@@ -21,7 +21,6 @@ namespace MainProject
 
 
             // If the library isn't in the environment path we need to set it
-            //..\\..\\libs / glfw - 3.2.1.bin.WIN32 / lib - mingw
             Glfw.ConfigureNativesDirectory("..\\..\\libs/glfw-3.2.1.bin.WIN32/lib-mingw");
 
             // Initialize the GLFW
@@ -63,20 +62,12 @@ namespace MainProject
 
             float[] textureCoords = {
                 0,0,
-                1,0,
-                1,1,
                 0,1,
+                1,1,
+                1,0,
 
         };
 
-            // texture coords for fliped buffer
-            //    float[] textureCoords_fliped_buffer =
-            //    {
-            //        1,1,
-            //        0,1,
-            //        0,0,
-            //        1,0,
-            //};
 
             // create model
             RawModel model = loader.LoadToVao(vertices, textureCoords, indices);

@@ -27,11 +27,7 @@ namespace MainProject
         {
             this.image = bitmap;
             this.pixeslData = new byte[image.Height * image.Width * 4];
-
             pixeslData = TextureLoader.SetImageBuffer(image);
-
-            // flip buffer if Abgr
-            //Array.Reverse(pixeslData);
 
             textureID = Gl.GenTexture();
             Gl.BindTexture(TextureTarget.Texture2d, textureID);
@@ -59,9 +55,11 @@ namespace MainProject
             return new Texture(new Bitmap(path));
         }
 
-        
+
         public static byte[] SetImageBuffer(Bitmap image)
         {
+            image.RotateFlip(RotateFlipType.Rotate270FlipY);
+
             byte[] data = new byte[image.Width * image.Height * 4]; // 4 is because width * height == nuumber of pixels in image but every pixel has 4 bytes which are Red Green Blue Alpha
             int index = 0;
             for (int i = 0; i < image.Width; i++)

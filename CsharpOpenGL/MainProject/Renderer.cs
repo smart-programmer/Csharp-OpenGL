@@ -51,7 +51,7 @@ namespace MainProject
             Gl.BindVertexArray(0);
         }
 
-        private void createProjectionMatrix()////////
+        private void createProjectionMatrix()
         {
             float aspectRatio = (float)window.windowWidth / window.windowHeight;
             //float y_scale = (float)((1f / Math.Tan(math.toRadians(FOV / 2f))) * aspectRatio); // wrong formela by ThinMAtrix
@@ -61,39 +61,18 @@ namespace MainProject
             Console.WriteLine(window.windowWidth);
             Console.WriteLine(window.windowHeight);
 
-            //projectionMatrix.SetVoid();
-
             float[] matbuffer = projectionMatrix.Buffer;
-            //matbuffer[1] = 0;
-            //matbuffer[2] = 0;
-            //matbuffer[3] = 0;
-            //matbuffer[4] = 0;
-            //matbuffer[6] = 0;
-            //matbuffer[7] = 0;
-            //matbuffer[8] = 0;
-            //matbuffer[9] = 0;
-            //matbuffer[12] = 0;
-            //matbuffer[13] = 0;
+           
 
-            matbuffer[0] = x_scale; //0.8330863333333334f
+            matbuffer[0] = x_scale;
             matbuffer[5] = y_scale;
             matbuffer[10] = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
             matbuffer[11] = -1;
             matbuffer[14] = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length); 
             matbuffer[15] = 0;
-            //matbuffer[0] = x_scale;
-            //matbuffer[5] = y_scale;
-            //matbuffer[10] = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-            //matbuffer[14] = -1;
-            //matbuffer[11] = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length); ;
-            //matbuffer[15] = 0;
 
             this.projectionMatrix = new Matrix4f(matbuffer);
-            foreach (float n in projectionMatrix.Buffer)
-            {
-                Console.WriteLine(n);
-            }
-
+           
         }
 
     }

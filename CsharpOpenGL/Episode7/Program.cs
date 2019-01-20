@@ -22,7 +22,6 @@ namespace Episode7
 
 
             // If the library isn't in the environment path we need to set it
-            //..\\..\\libs / glfw - 3.2.1.bin.WIN32 / lib - mingw
             Glfw.ConfigureNativesDirectory("..\\..\\libs/glfw-3.2.1.bin.WIN32/lib-mingw");
 
             // Initialize the GLFW
@@ -64,9 +63,9 @@ namespace Episode7
 
             float[] textureCoords = {
                 0,0,
-                1,0,
-                1,1,
                 0,1,
+                1,1,
+                1,0,
 
     };
 

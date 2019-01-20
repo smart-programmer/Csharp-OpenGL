@@ -1,4 +1,5 @@
 ﻿using System;
+using Glfw3;
 using System.IO;
 using System.Drawing;
 using OpenGL;
@@ -20,6 +21,16 @@ namespace MainProject
 
             return new string[] { text };
         }
+
+        public static Glfw.Image getImage(string path)
+        {
+            Glfw.Image image = new Glfw.Image();
+            Bitmap bitmap = new Bitmap(path);
+            image.Pixels = TextureLoader.SetImageBuffer(bitmap);
+            image.Height = bitmap.Height;
+            image.Width = bitmap.Width;
+            return image;
+        }
     }
 
 
@@ -34,7 +45,7 @@ namespace MainProject
         {
             this.image = bitmap;
             this.pixeslData = new byte[image.Height * image.Width * 4];
-
+            //image.RotateFlip(RotateFlipType.Rotate270FlipY);
             pixeslData = TextureLoader.SetImageBuffer(image);
 
             // flip buffer if Abgr
@@ -69,6 +80,7 @@ namespace MainProject
 
         public static byte[] SetImageBuffer(Bitmap image)
         {
+            image.RotateFlip(RotateFlipType.Rotate270FlipY);
             byte[] data = new byte[image.Width * image.Height * 4]; // 4 is because width * height == nuumber of pixels in image but every pixel has 4 bytes which are Red Green Blue Alpha
             int index = 0;
             for (int i = 0; i < image.Width; i++)
