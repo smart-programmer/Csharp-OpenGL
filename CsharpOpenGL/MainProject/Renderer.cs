@@ -30,7 +30,7 @@ namespace MainProject
         {
             Gl.Enable(EnableCap.DepthTest);
             Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Gl.ClearColor(1, 0, 0, 1);
+            Gl.ClearColor(0, 0, 0, 1);
         }
 
 
@@ -41,6 +41,7 @@ namespace MainProject
             Gl.BindVertexArray(rawModel.vaoID);
             Gl.EnableVertexAttribArray(0);
             Gl.EnableVertexAttribArray(1);
+            Gl.EnableVertexAttribArray(2);
             Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.position, entity.rotX, entity.rotY, entity.rotZ, entity.scale);
             shader.loadTransformationMatrix(transformationMatrix);
             Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
@@ -48,6 +49,7 @@ namespace MainProject
             Gl.DrawElements(PrimitiveType.Triangles, rawModel.vertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
             Gl.DisableVertexAttribArray(0);
             Gl.DisableVertexAttribArray(1);
+            Gl.DisableVertexAttribArray(2);
             Gl.BindVertexArray(0);
         }
 

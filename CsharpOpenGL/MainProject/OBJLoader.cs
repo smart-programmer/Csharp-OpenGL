@@ -97,7 +97,7 @@ namespace MainProject
             {
                 indicesArray[i] = indices[i];
             }
-            return loader.LoadToVao(verticesArray, textureArray, indicesArray);
+            return loader.LoadToVao(verticesArray, textureArray, normalsArray, indicesArray);
         }
 
         private static void processVertex(ref string[] vertexData, ref List<uint> indices, ref List<Vertex2f> textures, ref List<Vertex3f> normals, ref float[] textureArray, ref float[] normalsArray)

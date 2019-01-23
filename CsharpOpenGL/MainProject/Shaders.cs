@@ -83,7 +83,7 @@ namespace MainProject
 
         protected void loadBool(int location, bool value)
         {
-            float toLoad = (value) ? 1 : 0;
+            float toLoad = (value) ? 1f : 0f;
 
             Gl.Uniform1f(location, 1, ref toLoad); // count
         }
@@ -103,12 +103,12 @@ namespace MainProject
             Gl.GetShader(shaderID, ShaderParameterName.CompileStatus, out status);
             if (status == Gl.TRUE)
             {
-                Console.WriteLine("Vertex Creation Success.");
+                Console.WriteLine($"{type} Creation Success.");
                 return shaderID;
             }
             else if (status == Gl.FALSE)
             {
-                Console.WriteLine("Vertex creation fail.");
+                Console.WriteLine($"{type} creation fail.");
                 Gl.GetShader(shaderID, ShaderParameterName.InfoLogLength, out int logLength);
                 int logMaxLength = 1024;
                 StringBuilder infoLog = new StringBuilder(logMaxLength);
@@ -133,6 +133,8 @@ namespace MainProject
         public int location_transformationMatrix;
         public int location_projectionMatrix;
         public int location_viewMatrix;
+        public int location_lightPosition;
+        public int location_lightColour;
 
         public StaticShader() : base(vertexString, fragmentString)
         {
@@ -144,6 +146,7 @@ namespace MainProject
         {
             base.bindAttribute(0, "position");
             base.bindAttribute(1, "textureCoords");
+            base.bindAttribute(2, "normal");
         }
 
         protected override void getAllUniformLocations()
@@ -151,11 +154,19 @@ namespace MainProject
             location_transformationMatrix = base.getUinformLocation("transformationMatrix");
             location_projectionMatrix = base.getUinformLocation("projectionMatrix");
             location_viewMatrix = base.getUinformLocation("viewMatrix");
+            location_lightPosition = base.getUinformLocation("lighPosition");
+            location_lightColour = base.getUinformLocation("lightColour");
         }
 
         public void loadTransformationMatrix(Matrix4f matrix)
         {
             base.loadMatrix(location_transformationMatrix, matrix);
+        }
+
+        public void loadLight(Light light)
+        {
+            base.loadVector(location_lightPosition, light.position);
+            base.loadVector(location_lightColour, light.colour);
         }
 
         public void loadProjectionMatrix(Matrix4f projection)

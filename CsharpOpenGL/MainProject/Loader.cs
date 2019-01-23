@@ -11,12 +11,13 @@ namespace MainProject
         private List<uint> VBOS = new List<uint>();
         private List<uint> TEXTURES = new List<uint>();
 
-        public RawModel LoadToVao(float[] positions, float[] textureCoords, uint[] indices)
+        public RawModel LoadToVao(float[] positions, float[] textureCoords, float[] normals, uint[] indices)
         {
             uint vaoID = this.CreateVao();
             bindindicesBuffer(indices);
             this.StoreDataInAttributeList(0, 3, positions);
             this.StoreDataInAttributeList(1, 2, textureCoords);
+            this.StoreDataInAttributeList(2, 3, normals);
             this.unbindVao();
             return new RawModel(vaoID, indices.Length);
         }
