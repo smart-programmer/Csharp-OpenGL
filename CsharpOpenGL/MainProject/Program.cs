@@ -53,10 +53,11 @@ namespace MainProject
             Renderer renderer = new Renderer(shader, new WinowInfo(width, height));
             
             // create model
-            RawModel model = OBJLoader.loadObjModel("stall", loader);
-            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/stallTexture.png"));
+            RawModel model = OBJLoader.loadObjModel("dragon", loader);
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/purple.jpeg"));
             TexturedModel staticModel = new TexturedModel(model, texture);
-            
+            staticModel.modelTexture.shineDamper = 10;
+            staticModel.modelTexture.reflectivity = 0.000000001f; // 0.000000001f;
             Entity entity = new Entity(staticModel, new Vertex3f(0, 0, -25), 0, 0, 0, 2);
             Light light = new Light(new Vertex3f(0, 0, -20), new Vertex3f(1f, 1f, 1f));
             //Entity entity2 = new Entity(staticModel, new Vertex3f(-10, 40, -3), 0, 0, 0, 1);

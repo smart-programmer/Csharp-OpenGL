@@ -44,6 +44,8 @@ namespace MainProject
             Gl.EnableVertexAttribArray(2);
             Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.position, entity.rotX, entity.rotY, entity.rotZ, entity.scale);
             shader.loadTransformationMatrix(transformationMatrix);
+            ModelTexture texture = model.modelTexture;
+            shader.loadVariables(texture.shineDamper, texture.reflectivity);
             Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
             Gl.BindTexture(TextureTarget.Texture2d, model.modelTexture.textureId); // pass coords
             Gl.DrawElements(PrimitiveType.Triangles, rawModel.vertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);

@@ -135,6 +135,8 @@ namespace MainProject
         public int location_viewMatrix;
         public int location_lightPosition;
         public int location_lightColour;
+        public int location_shineDamper;
+        public int location_reflectivity;
 
         public StaticShader() : base(vertexString, fragmentString)
         {
@@ -156,6 +158,14 @@ namespace MainProject
             location_viewMatrix = base.getUinformLocation("viewMatrix");
             location_lightPosition = base.getUinformLocation("lighPosition");
             location_lightColour = base.getUinformLocation("lightColour");
+            location_shineDamper = base.getUinformLocation("shineDamper");
+            location_reflectivity = base.getUinformLocation("reflectivity");
+        }
+
+        public void loadVariables(float dapmer, float reflectivity)
+        {
+            base.loadFloat(location_shineDamper, dapmer);
+            base.loadFloat(location_reflectivity, reflectivity);
         }
 
         public void loadTransformationMatrix(Matrix4f matrix)
