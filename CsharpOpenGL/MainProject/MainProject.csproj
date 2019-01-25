@@ -65,6 +65,7 @@
     <Compile Include="entities\Entity.cs" />
     <Compile Include="entities\Light.cs" />
     <Compile Include="Loader.cs" />
+    <Compile Include="MasterRenderer.cs" />
     <Compile Include="Models\TexturedModel.cs" />
     <Compile Include="OBJLoader.cs" />
     <Compile Include="Program.cs" />

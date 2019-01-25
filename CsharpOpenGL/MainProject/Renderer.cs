@@ -3,6 +3,7 @@ using OpenGL;
 using MainProject.toolbox;
 using MainProject.Models;
 using MainProject.entities;
+using System.Collections.Generic;
 
 
 namespace MainProject
@@ -15,10 +16,14 @@ namespace MainProject
         WinowInfo window { set; get; }
 
         private Matrix4f projectionMatrix = new Matrix4f();
+        private StaticShader shader { set; get; }
 
-        public Renderer(StaticShader shader, WinowInfo Window)
+        public Renderer(StaticShader Shader, WinowInfo Window)
         {
+            this.shader = Shader;
             window = Window;
+            Gl.Enable(EnableCap.CullFace);
+            Gl.CullFace(CullFaceMode.Back);
             createProjectionMatrix();
             shader.start();
             shader.loadProjectionMatrix(projectionMatrix);
@@ -34,26 +39,48 @@ namespace MainProject
         }
 
 
-        public void render(Entity entity, StaticShader shader)
+        public void render(Dictionary<TexturedModel, List<Entity>> entities)
         {
-            TexturedModel model = entity.model;
+            foreach (TexturedModel model in entities.Keys)
+            {
+                prepareTexturedModel(model);
+                List<Entity> batch = entities[model];
+                foreach (Entity entity in batch)
+                {
+                    prepareInstance(entity);
+                    Gl.DrawElements(PrimitiveType.Triangles, model.rawModel.vertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+                }
+                unbindTexture();
+            }
+        }
+
+        private void prepareTexturedModel(TexturedModel model)
+        {
             RawModel rawModel = model.rawModel;
             Gl.BindVertexArray(rawModel.vaoID);
             Gl.EnableVertexAttribArray(0);
             Gl.EnableVertexAttribArray(1);
             Gl.EnableVertexAttribArray(2);
-            Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.position, entity.rotX, entity.rotY, entity.rotZ, entity.scale);
-            shader.loadTransformationMatrix(transformationMatrix);
             ModelTexture texture = model.modelTexture;
             shader.loadVariables(texture.shineDamper, texture.reflectivity);
             Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
             Gl.BindTexture(TextureTarget.Texture2d, model.modelTexture.textureId); // pass coords
-            Gl.DrawElements(PrimitiveType.Triangles, rawModel.vertexCount, DrawElementsType.UnsignedInt, IntPtr.Zero);
+        }
+
+        private void unbindTexture()
+        {
             Gl.DisableVertexAttribArray(0);
             Gl.DisableVertexAttribArray(1);
             Gl.DisableVertexAttribArray(2);
             Gl.BindVertexArray(0);
         }
+
+        private void prepareInstance(Entity entity)
+        {
+            Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.position, entity.rotX, entity.rotY, entity.rotZ, entity.scale);
+            shader.loadTransformationMatrix(transformationMatrix);
+        }
+
 
         private void createProjectionMatrix()
         {
