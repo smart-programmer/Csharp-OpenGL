@@ -5,6 +5,7 @@ using Glfw3;
 using MainProject.Models;
 using MainProject.toolbox;
 using MainProject.entities;
+using MainProject.terrains;
 using System.Collections.Generic;
 
 
@@ -50,13 +51,20 @@ namespace MainProject
 
 
             // create model
-            RawModel model = OBJLoader.loadObjModel("cube", loader);
-            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/purple.jpeg"));
+            RawModel model = OBJLoader.loadObjModel("Spruce", loader);
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/branch.png"));
             TexturedModel staticModel = new TexturedModel(model, texture);
             staticModel.modelTexture.shineDamper = 10;
-            staticModel.modelTexture.reflectivity = 1; // 0.000000001f;
+            staticModel.modelTexture.reflectivity = 0; // 0.000000001f;
             Entity entity = new Entity(staticModel, new Vertex3f(0, 0, -25), 0, 0, 0, 2);
             Light light = new Light(new Vertex3f(0, 0, -20), new Vertex3f(1f, 1f, 1f));
+
+
+            ModelTexture terrainTexture = new ModelTexture(loader.loadTexture("..\\..\\res/b.jpeg"));
+            terrainTexture.shineDamper = 10;
+            terrainTexture.reflectivity = 0;
+            Terrain terrain = new Terrain(800, 0, loader, terrainTexture);
+            Terrain terrain2 = new Terrain(800, -800, loader, terrainTexture);
 
             Random random = new Random();
             //int r = rand.Next(0, 1);
@@ -69,11 +77,10 @@ namespace MainProject
 
             for (int i = 0; i < 10000; i++)
             {
-                double x = random.NextDouble() * 1000 - 480;
-                double y = random.NextDouble() * 1000 - 400;
-                double z = random.NextDouble() * -3000;
-                allCubes.Add(new Entity(staticModel, new Vertex3f((float)x, (float)y, (float)z), (float)random.NextDouble() * 180,
-                    (float)random.NextDouble() * 180, 0, 1));
+                double x = random.NextDouble() * -1600 + 800;
+                double y = 0;
+                double z = random.NextDouble() * -2410;
+                allCubes.Add(new Entity(staticModel, new Vertex3f((float)x, (float)y, (float)z), 90, 0, 0, 2));
             }
 
             MasterRenderer renderer = new MasterRenderer(new WinowInfo(width, height));
@@ -87,9 +94,12 @@ namespace MainProject
                 // Render here
                 camera.move(window);
 
+                renderer.processTerrain(terrain);
+                renderer.processTerrain(terrain2);
+
                 foreach (Entity cube in allCubes)
                 {
-                    cube.increaseRotation(1, 0, 1);
+                    //cube.increaseRotation(1, 0, 1);
                     renderer.processEntity(cube);
                 }
                

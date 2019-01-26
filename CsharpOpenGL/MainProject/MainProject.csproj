@@ -71,8 +71,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RawModel.cs" />
-    <Compile Include="Renderer.cs" />
+    <Compile Include="EntityRenderer.cs" />
     <Compile Include="Shaders.cs" />
+    <Compile Include="TerrainRenderer.cs" />
+    <Compile Include="TerrainShader.cs" />
+    <Compile Include="terrains\Terrain.cs" />
     <Compile Include="Textures.cs" />
     <Compile Include="toolbox\Maths.cs" />
     <Compile Include="Utils.cs" />
@@ -81,5 +84,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

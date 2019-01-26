@@ -55,8 +55,8 @@ namespace MainProject
             Gl.BindTexture(TextureTarget.Texture2d, textureID);
 
             int value = Gl.REPEAT;
-            Gl.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, ref value);
             Gl.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, ref value);
+            Gl.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, ref value);
 
             value = Gl.NEAREST;
             Gl.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, ref value);

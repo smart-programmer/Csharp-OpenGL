@@ -6,7 +6,7 @@ namespace MainProject.entities
 {
     public class Camera
     {
-        public Vertex3f positin = new Vertex3f(0, 1, 1);
+        public Vertex3f positin = new Vertex3f(0, 5, -10);
         public float pitch { set; get; } // how high or low the camera is aiming
         public float yaw { set; get; } // how much left or right the camera is aiming
         public float roll { set; get; } // how much the camera is tilted
@@ -24,27 +24,27 @@ namespace MainProject.entities
 
             if (W)
             {
-                positin.z -= 0.6f;
+                positin.z -= 3f;
             }
             if (S)
             {
-                positin.z += 0.6f;
+                positin.z += 3f;
             }
             if (D)
             {
-                positin.x += 0.6f;
+                positin.x += 3f;
             }
             if (A)
             {
-                positin.x -= 0.6f;
+                positin.x -= 3f;
             }
             if (space)
             {
-                positin.y += 0.6f;
+                positin.y += 3f;
             }
             if (c)
             {
-                positin.y -= 0.6f;
+                positin.y -= 3f;
             }
 
         }

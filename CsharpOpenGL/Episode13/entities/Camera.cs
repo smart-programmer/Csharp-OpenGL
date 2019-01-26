@@ -6,7 +6,7 @@ namespace Epsiode13.entities
 {
     public class Camera
     {
-        public Vertex3f positin = new Vertex3f(0, 1, 1);
+        public Vertex3f positin = new Vertex3f(0, 0, 0);
         public float pitch { set; get; } 
         public float yaw { set; get; } 
         public float roll { set; get; }

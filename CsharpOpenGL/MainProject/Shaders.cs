@@ -11,6 +11,8 @@ namespace MainProject
     {
         public static string[] vertexShader = Utils.GetValidShaderStringArray("..\\..\\shaders/vertexShader.txt");
         public static string[] fragmentShader = Utils.GetValidShaderStringArray("..\\..\\shaders/fragmentShader.txt");
+        public static string[] terrainVertexShader = Utils.GetValidShaderStringArray("..\\..\\shaders/terrainVertexShader.txt");
+        public static string[] terrainFragmentShader = Utils.GetValidShaderStringArray("..\\..\\shaders/terrainFragmentShader.txt");
     }
 
 
