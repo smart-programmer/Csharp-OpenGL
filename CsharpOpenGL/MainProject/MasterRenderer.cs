@@ -12,7 +12,11 @@ namespace MainProject
     {
         private const float FOV = 70;
         private const float NEAR_PLANE = 0.1f;
-        private const float FAR_PLANE = 1000;
+        private const float FAR_PLANE = 1500;
+
+        private const float RED = 0.5f;
+        private const float GREEN = 0.5f;
+        private const float BLUE = 0.5f;
 
         private Matrix4f projectionMatrix = new Matrix4f();
 
@@ -30,12 +34,22 @@ namespace MainProject
         public MasterRenderer(WinowInfo window)
         {
             this.window = window;
-            Gl.Enable(EnableCap.CullFace);
-            Gl.CullFace(CullFaceMode.Back);
+            enableCulling();
             createProjectionMatrix();
             this.shader = new StaticShader();
             this.renderer = new EntityRenderer(shader, projectionMatrix);
             this.terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+        }
+
+        public static void enableCulling()
+        {
+            Gl.Enable(EnableCap.CullFace);
+            Gl.CullFace(CullFaceMode.Back);
+        }
+
+        public static void disableCulling()
+        {
+            Gl.Disable(EnableCap.CullFace);
         }
 
 
@@ -43,11 +57,13 @@ namespace MainProject
         {
             prepare();
             shader.start();
+            shader.loadSkyColour(RED, GREEN, BLUE);
             shader.loadLight(sun);
             shader.loadViewMatrix(camera);
             renderer.render(entities);
             shader.stop();
             terrainShader.start();
+            terrainShader.loadSkyColour(RED, GREEN, BLUE);
             terrainShader.loadLight(sun);
             terrainShader.loadViewMatrix(camera);
             terrainRenderer.render(terrains);
@@ -86,7 +102,7 @@ namespace MainProject
         {
             Gl.Enable(EnableCap.DepthTest);
             Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            Gl.ClearColor(0, 1, 1, 1);
+            Gl.ClearColor(RED, GREEN, BLUE, 1);
         }
 
         private void createProjectionMatrix()

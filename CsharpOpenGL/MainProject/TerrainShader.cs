@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenGL;
 using System.Collections.Generic;
 using MainProject.entities;
 using MainProject.toolbox;
@@ -16,6 +17,7 @@ namespace MainProject
         public int location_lightColour;
         public int location_shineDamper;
         public int location_reflectivity;
+        public int loaction_skyColour;
 
         public TerrainShader() : base(vertexString, fragmentString)
         {
@@ -39,6 +41,12 @@ namespace MainProject
             location_lightColour = base.getUinformLocation("lightColour");
             location_shineDamper = base.getUinformLocation("shineDamper");
             location_reflectivity = base.getUinformLocation("reflectivity");
+            loaction_skyColour = base.getUinformLocation("skyColour");
+        }
+
+        public void loadSkyColour(float r, float g, float b)
+        {
+            base.loadVector(loaction_skyColour, new Vertex3f(r, g, b));
         }
 
         public void loadVariables(float dapmer, float reflectivity)

@@ -3,6 +3,9 @@ using Glfw3;
 using System.IO;
 using System.Drawing;
 using OpenGL;
+using System.Collections.Generic;
+using MainProject.entities;
+using MainProject.Models;
 
 
 /// <summary>
@@ -200,5 +203,6 @@ namespace MainProject
             windowHeight = height;
         }
     }
+
 
 }

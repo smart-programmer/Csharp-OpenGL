@@ -139,6 +139,8 @@ namespace MainProject
         public int location_lightColour;
         public int location_shineDamper;
         public int location_reflectivity;
+        public int location_useFakeLighting;
+        public int location_skyColour;
 
         public StaticShader() : base(vertexString, fragmentString)
         {
@@ -162,6 +164,18 @@ namespace MainProject
             location_lightColour = base.getUinformLocation("lightColour");
             location_shineDamper = base.getUinformLocation("shineDamper");
             location_reflectivity = base.getUinformLocation("reflectivity");
+            location_useFakeLighting = base.getUinformLocation("useFakeLighting");
+            location_skyColour = base.getUinformLocation("skyColour");
+        }
+
+        public void loadSkyColour(float r, float g, float b)
+        {
+            base.loadVector(location_skyColour, new Vertex3f(r, b, g));
+        }
+
+        public void loadFakeLighting(bool useFake)
+        {
+            base.loadBool(location_useFakeLighting, useFake);
         }
 
         public void loadVariables(float dapmer, float reflectivity)

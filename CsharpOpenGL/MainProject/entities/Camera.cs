@@ -24,27 +24,27 @@ namespace MainProject.entities
 
             if (W)
             {
-                positin.z -= 3f;
+                positin.z -= 2f;
             }
             if (S)
             {
-                positin.z += 3f;
+                positin.z += 2f;
             }
             if (D)
             {
-                positin.x += 3f;
+                positin.x += 2f;
             }
             if (A)
             {
-                positin.x -= 3f;
+                positin.x -= 2f;
             }
             if (space)
             {
-                positin.y += 3f;
+                positin.y += 2f;
             }
             if (c)
             {
-                positin.y -= 3f;
+                positin.y -= 2f;
             }
 
         }

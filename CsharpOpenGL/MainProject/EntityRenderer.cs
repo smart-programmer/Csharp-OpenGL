@@ -48,6 +48,11 @@ namespace MainProject
             Gl.EnableVertexAttribArray(1);
             Gl.EnableVertexAttribArray(2);
             ModelTexture texture = model.modelTexture;
+            if (texture.isHasTransparency)
+            {
+                MasterRenderer.disableCulling();
+            }
+            shader.loadFakeLighting(texture.isUseFakeLighting);
             shader.loadVariables(texture.shineDamper, texture.reflectivity);
             Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
             Gl.BindTexture(TextureTarget.Texture2d, model.modelTexture.textureId); // pass coords
@@ -55,6 +60,7 @@ namespace MainProject
 
         private void unbindTexture()
         {
+            MasterRenderer.enableCulling();
             Gl.DisableVertexAttribArray(0);
             Gl.DisableVertexAttribArray(1);
             Gl.DisableVertexAttribArray(2);
