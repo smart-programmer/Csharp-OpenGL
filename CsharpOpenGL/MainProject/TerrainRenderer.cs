@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MainProject.terrains;
 using MainProject.Models;
 using MainProject.toolbox;
+using MainProject.Textures;
 
 
 namespace MainProject
@@ -18,6 +19,7 @@ namespace MainProject
             this.shader = shader;
             this.shader.start();
             shader.loadProjectionMatrix(projectionMAtrix);
+            shader.connectTextureUnits();
             this.shader.stop();
         }
 
@@ -39,11 +41,25 @@ namespace MainProject
             Gl.EnableVertexAttribArray(0);
             Gl.EnableVertexAttribArray(1);
             Gl.EnableVertexAttribArray(2);
-            ModelTexture texture = terrain.texture;
-            shader.loadVariables(texture.shineDamper, texture.reflectivity);
-            Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
-            Gl.BindTexture(TextureTarget.Texture2d, texture.textureId); // pass coords
+            bindTextures(terrain);
+            shader.loadVariables(1, 0);
         }
+
+        private void bindTextures(Terrain terrain)
+        {
+            TerrainTexturePack texturePack = terrain.texturePack;
+            Gl.ActiveTexture(TextureUnit.Texture0); // activate texture
+            Gl.BindTexture(TextureTarget.Texture2d, texturePack.backgroundTexture.textureID); // pass coords
+            Gl.ActiveTexture(TextureUnit.Texture1);
+            Gl.BindTexture(TextureTarget.Texture2d, texturePack.rTexture.textureID);
+            Gl.ActiveTexture(TextureUnit.Texture2);
+            Gl.BindTexture(TextureTarget.Texture2d, texturePack.gTexture.textureID);
+            Gl.ActiveTexture(TextureUnit.Texture3);
+            Gl.BindTexture(TextureTarget.Texture2d, texturePack.bTexture.textureID);
+            Gl.ActiveTexture(TextureUnit.Texture4);
+            Gl.BindTexture(TextureTarget.Texture2d, terrain.blendMap.textureID);
+        }
+        
 
         private void unbindTexture()
         {

@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using MainProject.Models;
+using MainProject.Textures;
 
 
 namespace MainProject.terrains
 {
     class Terrain
     {
-        private static float SIZE = 1600;
+        private static float SIZE = 1600; // the terrain needs to be squared for textures
         private static uint VERTEX_COUNT = 128;
 
         public  float x { set; get; }
         public float z { set; get; }
         public RawModel model { set; get; }
-        public ModelTexture texture { set; get; }
+        public TerrainTexturePack texturePack { set; get; }
+        public TerrainTexture blendMap { set; get; }
 
-        public Terrain(int gridX, int gridZ, Loader loader, ModelTexture texture)
+        public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap)
         {
-            this.texture = texture;
+            this.texturePack = texturePack;
+            this.blendMap = blendMap;
             this.x = gridX;
             this.z = gridZ;
             this.model = generateTerrain(loader);

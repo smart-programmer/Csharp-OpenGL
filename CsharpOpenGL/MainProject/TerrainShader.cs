@@ -17,7 +17,12 @@ namespace MainProject
         public int location_lightColour;
         public int location_shineDamper;
         public int location_reflectivity;
-        public int loaction_skyColour;
+        public int location_skyColour;
+        public int location_backgroundTexture;
+        public int location_rTexture;
+        public int location_gTexture;
+        public int location_bTexture;
+        public int location_blendMap;
 
         public TerrainShader() : base(vertexString, fragmentString)
         {
@@ -41,12 +46,26 @@ namespace MainProject
             location_lightColour = base.getUinformLocation("lightColour");
             location_shineDamper = base.getUinformLocation("shineDamper");
             location_reflectivity = base.getUinformLocation("reflectivity");
-            loaction_skyColour = base.getUinformLocation("skyColour");
+            location_skyColour = base.getUinformLocation("skyColour");
+            location_backgroundTexture = base.getUinformLocation("backgroundTexture");
+            location_rTexture = base.getUinformLocation("rTexture");
+            location_gTexture = base.getUinformLocation("gTexture");
+            location_bTexture = base.getUinformLocation("bTexture");
+            location_blendMap = base.getUinformLocation("blendMap");
+        }
+
+        public void connectTextureUnits()
+        {
+            base.loadInt(location_backgroundTexture, 0);
+            base.loadInt(location_rTexture, 1);
+            base.loadInt(location_gTexture, 2);
+            base.loadInt(location_bTexture, 3);
+            base.loadInt(location_blendMap, 4);
         }
 
         public void loadSkyColour(float r, float g, float b)
         {
-            base.loadVector(loaction_skyColour, new Vertex3f(r, g, b));
+            base.loadVector(location_skyColour, new Vertex3f(r, g, b));
         }
 
         public void loadVariables(float dapmer, float reflectivity)

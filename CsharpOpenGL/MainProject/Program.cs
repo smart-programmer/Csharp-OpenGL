@@ -6,6 +6,7 @@ using MainProject.Models;
 using MainProject.toolbox;
 using MainProject.entities;
 using MainProject.terrains;
+using MainProject.Textures;
 using System.Collections.Generic;
 
 
@@ -51,6 +52,15 @@ namespace MainProject
             // create loder and renderer
             Loader loader = new Loader();
 
+            // create terrain texture pack
+            TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("..\\..\\res/grassy2.png"));
+            TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("..\\..\\res/mud.png"));
+            TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("..\\..\\res/grassFlowers.png"));
+            TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("..\\..\\res/path.png"));
+            TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
+
+            // create blend map
+            TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("..\\..\\res/blendMap.png"));
 
             // create model
             RawModel fern = OBJLoader.loadObjModel("fern", loader);
@@ -80,8 +90,8 @@ namespace MainProject
             ModelTexture terrainTexture = new ModelTexture(loader.loadTexture("..\\..\\res/grass.png"));
             terrainTexture.shineDamper = 10;
             terrainTexture.reflectivity = 0;
-            Terrain terrain = new Terrain(800, 0, loader, terrainTexture);
-            Terrain terrain2 = new Terrain(800, -800, loader, terrainTexture);
+            Terrain terrain = new Terrain(800, 0, loader, texturePack, blendMap);
+            Terrain terrain2 = new Terrain(800, -1600, loader, texturePack, blendMap);
 
             RawModel tree = OBJLoader.loadObjModel("normal_tree", loader);
             ModelTexture treeTexture = new ModelTexture(loader.loadTexture("..\\..\\res/normal_tree.png"));
@@ -89,10 +99,7 @@ namespace MainProject
 
 
             Random random = new Random();
-            //int r = rand.Next(0, 1);
-            //int g = rand.Next(0, 1);
-            //int b = rand.Next(0, 1);
-
+            
             Camera camera = new Camera();
 
             List<Entity> allCubes = new List<Entity>();

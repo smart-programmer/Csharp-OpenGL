@@ -73,6 +73,11 @@ namespace MainProject
             Gl.BindAttribLocation(programID, attribute, variableName);
         }
 
+        protected void loadInt(int location, int value)
+        {
+            Gl.Uniform1i(location, 1, ref value);
+        }
+
         protected void loadFloat(int location, float value)
         {
             Gl.Uniform1f(location, 1, ref value);// count
