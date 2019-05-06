@@ -5,10 +5,10 @@ using MainProject.Models;
 
 namespace MainProject.entities
 {
-    class Entity
+    public class Entity
     {
         public TexturedModel model { set; get; }
-        public Vertex3f position { set; get; }
+        public Vertex3f position;
         public float rotX { set; get; }
         public float rotY { set; get; }
         public float rotZ { set; get; }
@@ -27,7 +27,9 @@ namespace MainProject.entities
 
         public void increasePosition(float dx, float dy, float dz)
         {
-            this.position = new Vertex3f(position.x + dx, position.y + dy, position.z + dz);
+            position.x += dx;
+            position.y += dy;
+            position.z += dz;
 
 
             // https://stackoverflow.com/questions/1747654/cannot-modify-the-return-value-error-c-sharp

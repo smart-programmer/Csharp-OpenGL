@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MainProject.Textures
 {
-    class ModelTexture
+    public class ModelTexture
     {
         public uint textureId { set; get; }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MainProject.Models
 {
-    class RawModel
+    public class RawModel
     {
         public uint vaoID { set; get; } 
         public int vertexCount { set; get; } 

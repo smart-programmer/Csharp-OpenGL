@@ -64,6 +64,7 @@
     <Compile Include="entities\Camera.cs" />
     <Compile Include="entities\Entity.cs" />
     <Compile Include="entities\Light.cs" />
+    <Compile Include="entities\Player.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="MasterRenderer.cs" />
     <Compile Include="Models\TexturedModel.cs" />

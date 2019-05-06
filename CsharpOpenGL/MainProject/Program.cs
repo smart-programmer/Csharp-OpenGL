@@ -8,6 +8,7 @@ using MainProject.entities;
 using MainProject.terrains;
 using MainProject.Textures;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 
 // NOTE: i made the FAR_PLANE = 1500 insted of 1000
@@ -19,6 +20,10 @@ namespace MainProject
     class MainClass
     {
         public static int width = 1221, height = 666;
+        public static WinowInfo winowInfo = new WinowInfo(1221, 666);
+
+        private static long lastFrameTime;
+        public static float delta { set; get; }
 
         static void Main(string[] args)
         {
@@ -78,6 +83,18 @@ namespace MainProject
             texturedGrass.modelTexture.isHasTransparency = true;
             texturedGrass.modelTexture.isUseFakeLighting = true;
 
+            RawModel tree = OBJLoader.loadObjModel("normal_tree", loader);
+            ModelTexture treeTexture = new ModelTexture(loader.loadTexture("..\\..\\res/normal_tree.png"));
+            TexturedModel texturedTree = new TexturedModel(tree, treeTexture);
+            texturedTree.modelTexture.shineDamper = 10;
+            texturedTree.modelTexture.reflectivity = 0;
+
+            RawModel tree2 = OBJLoader.loadObjModel("Spruce", loader);
+            ModelTexture treeTexture2 = new ModelTexture(loader.loadTexture("..\\..\\res/branch.png"));
+            TexturedModel texturedTree2 = new TexturedModel(tree2, treeTexture2);
+            texturedTree2.modelTexture.shineDamper = 10;
+            texturedTree2.modelTexture.reflectivity = 0;
+
             RawModel model = OBJLoader.loadObjModel("lowPolyTree", loader);
             ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/lowPolyTree.png"));
             TexturedModel staticModel = new TexturedModel(model, texture);
@@ -93,27 +110,47 @@ namespace MainProject
             Terrain terrain = new Terrain(800, 0, loader, texturePack, blendMap);
             Terrain terrain2 = new Terrain(800, -1600, loader, texturePack, blendMap);
 
-            RawModel tree = OBJLoader.loadObjModel("normal_tree", loader);
-            ModelTexture treeTexture = new ModelTexture(loader.loadTexture("..\\..\\res/normal_tree.png"));
-            TexturedModel texturedTree = new TexturedModel(tree, treeTexture);
+            RawModel stanfordBunny = OBJLoader.loadObjModel("person", loader);
+            ModelTexture stanfordBunnyTexture = new ModelTexture(loader.loadTexture("..\\..\\res/PlayerTexture.png"));
+            stanfordBunnyTexture.shineDamper = 3;
+            stanfordBunnyTexture.reflectivity = 0.00000000001f;
+            TexturedModel texturedStanfordBunny = new TexturedModel(stanfordBunny, stanfordBunnyTexture);
+            Player player = new Player(texturedStanfordBunny, new Vertex3f(0, 0, -100), 0, 0, 0, 3);
 
 
             Random random = new Random();
+            Random r = new Random();
             
-            Camera camera = new Camera();
+            Camera camera = new Camera(player, window, winowInfo);
 
             List<Entity> allCubes = new List<Entity>();
             List<Entity> allGrass = new List<Entity>();
             List<Entity> allFerns = new List<Entity>();
             List<Entity> allTrees = new List<Entity>();
+            List<Entity> allNormalTrees = new List<Entity>();
+            List<Entity> allTrees2 = new List<Entity>();
+
 
             for (int i = 0; i < 1000; i++)
             {
                 double x = random.NextDouble() * -1600 + 800;
                 double y = 0;
                 double z = random.NextDouble() * -2410;
-                allCubes.Add(new Entity(staticModel, new Vertex3f((float)x, (float)y, (float)z), 0, 0, 0, rand.Next(1, 4)));
+                float ra = r.Next(0, 23);
+                if (ra > 0 & ra < 5)
+                {
+                    allCubes.Add(new Entity(staticModel, new Vertex3f((float)x, (float)y, (float)z), 0, 0, 0, rand.Next(1, 3)));
+                }
+                else if (ra > 5 & ra < 20)
+                {
+                    allTrees2.Add(new Entity(texturedTree2, new Vertex3f((float)x, (float)y, (float)z), 90, 0, 0, rand.Next(5, 9)));
+                }
+                else
+                {
+                    allNormalTrees.Add(new Entity(texturedTree, new Vertex3f((float)x, (float)y, (float)z), 0, 0, 0, rand.Next(20, 25)));
+                }
             }
+
             for (int i = 0; i < 1000; i++)
             {
                 double x = random.NextDouble() * -1600 + 800;
@@ -130,15 +167,17 @@ namespace MainProject
             }
            
             MasterRenderer renderer = new MasterRenderer(new WinowInfo(width, height));
-          
+
+            lastFrameTime = getCurrentTime();
+
             // Loop until the user closes the window
             while (!Glfw.WindowShouldClose(window))
             {
                 //entity.increasePosition(0, 0, -0.1f);
                 entity.increaseRotation(0, 1, 0);
-                
                 // Render here
-                camera.move(window);
+                camera.move();
+                player.move(window);
 
                 renderer.processTerrain(terrain);
                 renderer.processTerrain(terrain2);
@@ -159,17 +198,31 @@ namespace MainProject
                 {
                     renderer.processEntity(tr);
                 }
+                foreach (Entity ntr in allNormalTrees)
+                {
+                    renderer.processEntity(ntr);
+                }
+                foreach (Entity tr2 in allTrees2)
+                {
+                    renderer.processEntity(tr2);
+                }
 
+                renderer.processEntity(player);
 
+                
                 renderer.render(light, camera);
-
-                //light.colour = new Vertex3f(r, g, b);
+               
 
                 //Swap front and back buffers
                 Glfw.SwapBuffers(window);
 
                 // Poll for and process events
                 Glfw.PollEvents();
+
+                long currentFrameTime = getCurrentTime();
+                delta = (currentFrameTime - lastFrameTime) / 1000f;
+                //Console.WriteLine(currentFrameTime + "  " + delta + "  " + lastFrameTime);
+                lastFrameTime = currentFrameTime;
             }
 
             // clean memory
@@ -178,6 +231,17 @@ namespace MainProject
 
             // terminate program
             Glfw.Terminate();
+        }
+
+
+        private static long getCurrentTime()
+        {
+            return Stopwatch.GetTimestamp() * 1000 / Stopwatch.Frequency;
+        }
+
+        public static float getFrameTimeSeconds()
+        {
+            return delta;
         }
     }
 }

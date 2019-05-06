@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MainProject.Models
 {
-    class TexturedModel
+    public class TexturedModel
     {
         public RawModel rawModel { set; get; }
         public ModelTexture modelTexture { set; get; }
