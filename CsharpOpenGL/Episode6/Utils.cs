@@ -26,7 +26,6 @@ namespace MainProject
         public Texture(Bitmap bitmap)
         {
             this.image = bitmap;
-            this.pixeslData = new byte[image.Height * image.Width * 4];
             pixeslData = TextureLoader.SetImageBuffer(image);
 
             textureID = Gl.GenTexture();
@@ -83,6 +82,8 @@ namespace MainProject
                     index++;
                 }
             }
+
+            // result: { red, green, blue, alpha, red, green, blue alpha, red, green, blue, alpha, ...}
 
             return data;
         }

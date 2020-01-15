@@ -63,7 +63,7 @@ namespace Episode14
             terrainTexture.shineDamper = 10;
             terrainTexture.reflectivity = 0;
             Terrain terrain = new Terrain(0, -400, loader, terrainTexture);
-            Terrain terrain2 = new Terrain(1, -400, loader, terrainTexture);
+            //Terrain terrain2 = new Terrain(1, -400, loader, terrainTexture);
 
             Camera camera = new Camera();
 
@@ -87,7 +87,7 @@ namespace Episode14
                 camera.move(window);
 
                 renderer.processTerrain(terrain);
-                renderer.processTerrain(terrain2);
+                //renderer.processTerrain(terrain2);
 
                 foreach (Entity shape in allShapes)
                 {

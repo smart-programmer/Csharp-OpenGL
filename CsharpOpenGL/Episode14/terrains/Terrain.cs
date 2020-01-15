@@ -32,14 +32,13 @@ namespace Episode14.terrains
             float[] textureCoords = new float[count * 2];
             uint[] indices = new uint[6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1)];
             int vertexPointer = 0;
+
             for (int i = 0; i < VERTEX_COUNT; i++)
             {
                 for (int j = 0; j < VERTEX_COUNT; j++)
                 {
-                    // NOIE: i changed the next 3 lines for better terrain positioning
-                    vertices[vertexPointer * 3] = (-SIZE / 2) + (float)j / ((float)VERTEX_COUNT - 1) * SIZE;
-                    vertices[vertexPointer * 3 + 1] = 0;
-                    vertices[vertexPointer * 3 + 2] = (-SIZE / 2) + (float)i / ((float)VERTEX_COUNT - 1) * SIZE;
+                    vertices[vertexPointer * 3] = ((float)j / ((float)VERTEX_COUNT - 1)) * SIZE; 
+                    vertices[vertexPointer * 3 + 2] = ((float)i / ((float)VERTEX_COUNT - 1)) * SIZE;
                     normals[vertexPointer * 3] = 0;
                     normals[vertexPointer * 3 + 1] = 1;
                     normals[vertexPointer * 3 + 2] = 0;
@@ -48,6 +47,7 @@ namespace Episode14.terrains
                     vertexPointer++;
                 }
             }
+
             int pointer = 0;
             for (uint gz = 0; gz < VERTEX_COUNT - 1; gz++)
             {
@@ -63,6 +63,7 @@ namespace Episode14.terrains
                     indices[pointer++] = topRight;
                     indices[pointer++] = bottomLeft;
                     indices[pointer++] = bottomRight;
+                    
                 }
             }
             return loader.LoadToVao(vertices, textureCoords, normals, indices);

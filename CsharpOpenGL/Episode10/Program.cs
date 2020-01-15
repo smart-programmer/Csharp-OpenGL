@@ -53,7 +53,7 @@ namespace Episode10
             Renderer renderer = new Renderer(shader, new WinowInfo(width, height));
             
             // create model
-            RawModel model = OBJLoader.loadObjModel("stall", loader);
+            RawModel model = OBJLoader.loadObjModel("house", loader);
             ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/stallTexture.png"));
             TexturedModel staticModel = new TexturedModel(model, texture);
             

@@ -33,8 +33,8 @@ namespace Episode2
             uint vboID = Gl.GenBuffer();
             VBOS.Add(vboID);
             Gl.BindBuffer(BufferTarget.ArrayBuffer, vboID);
-            Gl.BufferData(BufferTarget.ArrayBuffer, (uint)(data.Length * sizeof(float)), data, BufferUsage.StaticDraw);
-            Gl.VertexAttribPointer(attribute_number, 3, VertexAttribType.Float, false, 0, IntPtr.Zero);
+            Gl.BufferData(BufferTarget.ArrayBuffer, (uint)(data.Length * sizeof(float)), data, BufferUsage.StaticDraw); // size in bytes
+            Gl.VertexAttribPointer(attribute_number, 3, VertexAttribType.Float, false, 0, IntPtr.Zero); // size 3 indicates x, y, z
             Gl.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 

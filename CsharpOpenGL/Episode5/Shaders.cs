@@ -3,6 +3,7 @@ using OpenGL;
 using System.Text;
 using System.IO;
 
+
 namespace Episode5
 {
     public abstract class ShaderProgram
@@ -57,16 +58,17 @@ namespace Episode5
             Gl.ShaderSource(shaderID, shaderString);
             Gl.CompileShader(shaderID);
 
+            // debuging code 
             int status;
             Gl.GetShader(shaderID, ShaderParameterName.CompileStatus, out status);
             if (status == Gl.TRUE)
             {
-                Console.WriteLine("Vertex Creation Success.");
+                Console.WriteLine(String.Format("shader number {0} creation succeeded", shaderID));
                 return shaderID;
             }
             else if (status == Gl.FALSE)
             {
-                Console.WriteLine("Vertex creation fail.");
+                Console.WriteLine(String.Format("shader number {0} creation failed", shaderID));
                 Gl.GetShader(shaderID, ShaderParameterName.InfoLogLength, out int logLength);
                 int logMaxLength = 1024;
                 StringBuilder infoLog = new StringBuilder(logMaxLength);
@@ -83,8 +85,8 @@ namespace Episode5
 
     public class StaticShader : ShaderProgram
     {
-        static string[] vertexShader = { File.ReadAllText("..\\..\\shaders/vertexShader.txt") };
-        static string[] fragmentShader = { File.ReadAllText("..\\..\\shaders/fragmentShader.txt") };
+        static string[] vertexShader = Utils.GetValidShaderStringArray("..\\..\\shaders/vertexShader.txt");
+        static string[] fragmentShader = Utils.GetValidShaderStringArray("..\\..\\shaders/fragmentShader.txt");
 
         public StaticShader() : base(vertexShader, fragmentShader)
         {

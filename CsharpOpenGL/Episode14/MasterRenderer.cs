@@ -12,7 +12,7 @@ namespace Episode14
     {
         private const float FOV = 70;
         private const float NEAR_PLANE = 0.1f;
-        private const float FAR_PLANE = 1000;
+        private const float FAR_PLANE = 10000;
 
         private Matrix4f projectionMatrix = new Matrix4f();
 

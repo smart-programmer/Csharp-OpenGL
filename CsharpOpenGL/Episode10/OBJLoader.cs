@@ -97,6 +97,7 @@ namespace Episode10
             {
                 indicesArray[i] = indices[i];
             }
+   
             return loader.LoadToVao(verticesArray, textureArray, indicesArray);
         }
 

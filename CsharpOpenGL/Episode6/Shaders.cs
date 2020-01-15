@@ -110,6 +110,7 @@ namespace MainProject
 
         protected override void bindAttributes()
         {
+            // bind variables to the correct AttributeList in the activated vao
             base.bindAttribute(0, "position");
             base.bindAttribute(1, "textureCoords");
         }
