@@ -149,6 +149,7 @@ namespace Episode18
                 // Render here
              
                 player.move(window);
+                camera.move(window);
 
                 renderer.processTerrain(terrain);
                 renderer.processTerrain(terrain2);

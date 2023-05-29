@@ -54,13 +54,13 @@ namespace Episode12
             
             // create model
             RawModel model = OBJLoader.loadObjModel("dragon", loader);
-            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/purple.jpeg"));
+            ModelTexture texture = new ModelTexture(loader.loadTexture("..\\..\\res/silver.jpg"));
             TexturedModel staticModel = new TexturedModel(model, texture);
             staticModel.modelTexture.shineDamper = 10;
             staticModel.modelTexture.reflectivity = 0.0000001f;
             
             Entity entity = new Entity(staticModel, new Vertex3f(0, 0, -25), 0, 0, 0, 2);
-            Light light = new Light(new Vertex3f(0, 0, -20), new Vertex3f(1f, 1f, 1f));
+            Light light = new Light(new Vertex3f(0, 0, -20), new Vertex3f(0.5f, 0.7f, 0.8f));
 
             Camera camera = new Camera();
 
