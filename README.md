@@ -11,7 +11,7 @@ ThinMatrixs LWJGL Tutorials: https://www.youtube.com/watch?v=VS8wlS9hF8E&list=PL
 ### link glfw
 
  1. got the the solution explorer on the right
- 2. click on `TestEngine` project
+ 2. click on the project you want to add the reference to, whether it's `Episode18` or `MainProject` or any other project
  3. right click references
  4. click add references
  5. brows to the `libs` directory and link `Glfw.Net.dll`
